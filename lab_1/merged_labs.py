@@ -162,6 +162,20 @@ def lab10task10():
     for i in strike_dates:
         united ^= i
     print(united, '\n', len(united))
+
+#Задание 7 Страны и города. Дан список стран и городов каждой страны.
+#Затем даны названия городов. Для каждого города укажите, в какой стране он
+#находится.
+def lab11task7():
+    countries = {'Russia' : ['Moscow', 'Petersburg', 'Novgorod', 'Kaluga'],
+                 'Ukraine' : ['Kiev', 'Donetsk', 'Odessa'],
+                 'Japan' : ['Osaka', 'Tokyo', 'Kyoto', 'Hiroshima']}
+    cityCount = int(input())
+    for i in range(cityCount):
+        city = input()
+        for country in countries:
+            if city in countries[country]:
+                print(country)
 # demo
 if __name__ == "__main__":
-    lab10task10()
+    lab11task7()
