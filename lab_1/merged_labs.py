@@ -176,6 +176,37 @@ def lab11task7():
         for country in countries:
             if city in countries[country]:
                 print(country)
+                
+# Задание 19 Проверяем правильность написания. Автоматическая
+# проверка орфографии не помешала бы многим из нас. В данном задании мы
+# напишем простую программу, сверяющую слова из текстового файла со
+# словарем. Неправильно написанными будем считать все слова, которых не
+# нашлось в словаре.               
+def lab12task19():
+    import _io
+    
+    def checkLines(inFile: _io.TextIOWrapper, dict: _io.TextIOWrapper):
+        text = inFile.read().split()
+        words = dict.read().split()
+        for word in text:
+            if word not in words:
+                return False
+        return True
+
+    fileName = input('Enter file name: ')
+    isFileOpened = False
+
+    while not isFileOpened:
+        try:
+            inputFile = open(fileName, 'r')
+            dict = open('words.txt', 'r')
+            isFileOpened = True
+            print('The text is correct.' if checkLines(inputFile, dict) else 'The text is incorrect.')
+        except FileNotFoundError:
+            print('Invalid directory or file name. Try again.')
+            fileName = input('Enter file name: ')
+
+
 # demo
 if __name__ == "__main__":
-    lab11task7()
+    lab12task19()
