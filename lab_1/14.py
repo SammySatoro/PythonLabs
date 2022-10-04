@@ -95,7 +95,70 @@ def lab14():
 
         root.mainloop()
 
-    task2()
+    def task5():
+        from tkinter import ttk
+        from tkinter import filedialog
+
+        def calculate():
+            try:
+                radius = int(radius_entry.get())
+                V = (4 / 3) * math.pi * radius ** 3
+                res_entry.delete(0, tkinter.END)
+                res_entry.insert(0, V)
+            except ValueError:
+                res_entry.delete(0, tkinter.END)
+                res_entry.insert(0, 'ERROR')
+
+        def save():
+            files = [('TXT File', '*.txt'),
+                     ('HTML File', '*.html')]
+            saving_format = select_list.current()
+            print(saving_format)
+            f = filedialog.asksaveasfile(mode='w', filetypes=[files[saving_format]])
+            if f is None:
+                return
+            res_to_save = res_entry.get()
+            f.write(res_to_save)
+            f.close()
+
+        root = tkinter.Tk()
+        root.geometry('280x220')
+        root.resizable(width=False, height=False)
+        root['background'] = '#856ff8'
+        root.title('Sphere radius')
+        root.resizable()
+
+        f_top = tkinter.Frame(root, bg='#856ff8')
+        f_mid = tkinter.Frame(root, bg='#856ff8')
+        f_bot = tkinter.Frame(root, bg='#856ff8')
+
+        radius_label = tkinter.Label(f_top, text='Set radius:', bg='#AFB4FF')
+        radius_entry = tkinter.Entry(f_top)
+
+        res_label = tkinter.Label(f_mid, text='Calculation result:', bg='#AFB4FF')
+        res_entry = tkinter.Entry(f_mid)
+
+        calc_btn = tkinter.Button(text='Calculate', command=calculate, bg='#AFB4FF')
+
+        save_btn = tkinter.Button(f_bot, text='Save', command=save, bg='#AFB4FF', width=8)
+        select_list = ttk.Combobox(f_bot, values=['.txt', '.html'], background='#AFB4FF', width=10)
+
+        f_top.pack(pady=30)
+        f_mid.pack(pady=0)
+        calc_btn.pack(pady=20)
+        f_bot.pack(pady=0)
+
+        radius_label.pack(side=tkinter.LEFT, padx=30)
+        radius_entry.pack(side=tkinter.LEFT)
+        res_label.pack(side=tkinter.LEFT, padx=10)
+        res_entry.pack(side=tkinter.LEFT)
+        save_btn.pack(side=tkinter.LEFT, padx=30)
+        select_list.pack(side=tkinter.LEFT)
+
+        root.mainloop()
+
+
+    task5()
 # demo
 if __name__ == "__main__":
     lab14()
