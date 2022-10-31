@@ -501,18 +501,32 @@ def lab14():
         tkinter.Button(frame, text='Print', command=click).pack(pady=5)
         tkinter.Button(frame, text='Quit', command=root.destroy).pack(pady=5)
         root.mainloop()
-
+        
     def task2():
         import random
-        import _io
 
-        def getRuWord():
-            ru_words_file = open('ruwords.txt', 'r', encoding='UTF-8')
-            return random.choice(ru_words_file.read().split())
+        dictionary = {
+            'мама': ['mother'],
+            'класс':['classroom', 'class', 'grade'],
+            'кот': ['cat', 'kitty'],
+            'птица': ['bird'],
+            'улица': ['street', 'road', 'outside'],
+            'дым': ['smoke'],
+            'мяч': ['ball'],
+            'зуб': ['tooth'],
+            'часы': ['clock', 'watch', 'hours'],
+            'число': ['number', 'few', 'count', 'amount', 'date'],
+            'хотеть': ['want', 'wish', 'be willing'],
+            'ручка': ['pen', 'handle', 'hand', 'arm', 'knob'],
+            'вообще-то': ['actually', 'in fact', 'really'],
+            'смотреть': ['watch', 'look', 'see', 'stare', 'gaze', 'view'],
+            'клавиатура': ['keyboard'],
+            'мышка': ['mouse'],
+            'наушники': ['headphones', 'earphones', 'earbuds', 'headset'],
+            'кофе': ['coffee'],
+        }
 
-
-        from translate import Translator
-
+        cur_ru_word = random.choice(list(dictionary.keys()))
 
         def guess():
             value = int(tries['text'][len(tries['text']) - 1])
@@ -520,39 +534,34 @@ def lab14():
             if (value == 1):
                 tries['text'] = 'You\'ve lost!'
                 guessBtn['state'] = tkinter.DISABLED
-
-            translator = Translator(from_lang='ru', to_lang='en')
-            ru_text = ru_word['text']
-            en_text = translator.translate(ru_text).lower().split()
-            en_text = en_text[len(en_text) - 1]
-            if entryBox.get() == en_text:
+            print(entryBox.get(), '   ', dictionary[ru_word['text']])
+            if entryBox.get() in dictionary[ru_word['text']]:
                 tries['text'] = 'You win!'
                 guessBtn['state'] = tkinter.DISABLED
-            return en_text
 
         def reset():
+            cur_ru_word = random.choice(list(dictionary.keys()))
             tries['text'] = 'Tries left: 3'
-            ru_word['text'] = getRuWord()
+            ru_word['text'] = cur_ru_word
             guessBtn['state'] = tkinter.ACTIVE
             ru_word['state'] = tkinter.ACTIVE
 
         def hint():
-            print(guess())
             ru_word['state'] = tkinter.DISABLED
             entryBox.delete(0, tkinter.END)
-            entryBox.insert(0, guess())
+            entryBox.insert(0, random.choice(dictionary[ru_word['text']]))
 
         root = tkinter.Tk()
         root.resizable(width=False, height=False)
         root.geometry('210x150')
-        root['background']='#856ff8'
+        root['background'] = '#856ff8'
 
         f_top = tkinter.Frame(root)
         f_bot = tkinter.Frame(root)
-        f_top['background']='#856ff8'
-        f_bot['background']='#856ff8'
+        f_top['background'] = '#856ff8'
+        f_bot['background'] = '#856ff8'
 
-        ru_word = tkinter.Button(f_top, command=hint, width=12, height=1, text=getRuWord(), bg='#5B4CA9')
+        ru_word = tkinter.Button(f_top, command=hint, width=12, height=1, text=cur_ru_word, bg='#5B4CA9')
         entryBox = tkinter.Entry(f_top, width=20, bg='#AFB4FF')
 
         guessBtn = tkinter.Button(f_bot, width=5, height=1, text='Guess', command=guess, bg='#5B4CA9')
