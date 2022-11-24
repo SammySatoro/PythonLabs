@@ -60,13 +60,13 @@ def lab15():
 
         def insert_many(self, table, fields, values):
             from sqlite3 import Error
-            placeholders = ', '.join('?' for _ in fields)
-            query = f"INSERT INTO {table}({', '.join(i for i in fields)}) VALUES ({placeholders})"
+            placeholders = ', '.join(str(i) for i in values)
+            query = f"INSERT INTO {table}({fields}) VALUES ({placeholders})"
             print(query)
             try:
                 self.__cursor.execute(f"SELECT * FROM {table}")
                 if values not in self.__cursor.fetchall():
-                    self.__cursor.executemany(query, values)
+                    self.__cursor.execute(query)
                     self.__db.commit()
                 else:
                     print('This entry already exists')
@@ -94,15 +94,9 @@ def lab15():
             pass
 
 
-    # FOREIGN KEY (ShowID) REFERENCES Show (ShowID) ON UPDATE CASCADE
-    # FOREIGN KEY (ArenaID) REFERENCES CircusArena (ArenaID) ON UPDATE CASCADE
-    # FOREIGN KEY (ShowID) REFERENCES Show (ShowID) ON UPDATE CASCADE
-    db = PyServerDB('pyserver.db')
+    db = PyServerDB('test.db')
 
-    db.create_table('CREATE TABLE IF NOT EXISTS Ticket('
-                    'ArenaID integer not null PRIMARY KEY AUTOINCREMENT,'
-                    'ShowID integer not null,'
-                    'Cost integer not null,'
-                    'Place integer not null)')
-    for i in db.get_table_names():
-        print(i[0])
+
+# demo
+if __name__ == "__main__":
+    lab15()
