@@ -22,6 +22,13 @@ def lab15():
             except Error:
                 print(Error)
 
+        def get_select(self, query):
+            from sqlite3 import Error
+            try:
+                return list(self.__cursor.execute(query))
+            except Error:
+                print(Error)
+
         def create_table(self, query):
             self.__cursor.execute(query)
             self.__db.commit()
@@ -95,6 +102,14 @@ def lab15():
 
 
     db = PyServerDB('test.db')
+
+    for i in db.get_table_data('Ticket'):
+        print(i)
+
+    q1 = 'select Cost from Ticket where TicketID>5'
+    q2 = 'select FirstName, MiddleName, LastName from Visitor'
+    for i in db.get_select(q2):
+        print(i)
 
 
 # demo
