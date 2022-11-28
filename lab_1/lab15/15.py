@@ -101,14 +101,24 @@ def lab15():
             pass
 
 
-    db = PyServerDB('test.db')
+    db = PyServerDB('pyserver.db')
 
-    for i in db.get_table_data('Ticket'):
+
+    table = 'Show'
+
+    for i in db.get_select(f'SELECT * FROM {table}'):
         print(i)
+    print('---------------------')
 
     q1 = 'select Cost from Ticket where TicketID>5'
     q2 = 'select FirstName, MiddleName, LastName from Visitor'
-    for i in db.get_select(q2):
+    q3 = 'select FirstName, MiddleName, LastName from Visitor join Ticket on Visitor.TicketID = Ticket.TicketID join Show on Ticket.ShowID = Show.ShowID where AmountOfSoldTickets>40'
+    # db.update('update Visitor as v set FirstName=\'C\', MiddleName=\'Ch\', LastName=\'Ben \' from Ticket as t where t.TicketID = v.TicketID and Place=2')
+    # db.update('update Ticket set Place = Place + 10 where Place>30')
+    # db.update('update Show set AmountOfSoldTickets = a.amount from (select Show.ShowID, count(AmountOfSoldTickets) as amount '
+    #           'from Show, Ticket where Show.ShowID = Ticket.ShowID group by Show.ShowID) as a where Show.ShowID = a.ShowID')
+    
+    for i in db.get_select(f'SELECT * FROM {table}'):
         print(i)
 
 
